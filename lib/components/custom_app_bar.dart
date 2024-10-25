@@ -16,7 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       child: AppBar(
         leading: IconButton(
-          padding: EdgeInsets.only(left: 16),
+          padding: EdgeInsets.symmetric(horizontal: 8),
           icon: Icon(isHomeScreen ? Icons.dehaze : Icons.chevron_left),
           onPressed: isHomeScreen
               ? () {} /// Home menu button action
