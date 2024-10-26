@@ -26,41 +26,43 @@ class SaleItemWidget extends StatelessWidget {
             Expanded(
               child: Container(
                 height: 70, // ItemContent 높이
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       item.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: primaryColor,
                       ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           '${item.discountRate}%',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 18.0,
                             color: lightRed,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        SizedBox(width: 10),
                         // 판매가
                         Text(
                           '${item.ncSellingPrice.toString()}원',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 18.0,
                             color: accentColor,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        SizedBox(width: 10),
                         Text(
                           '${item.originalPrice.toString()}원',
                           style: TextStyle(
