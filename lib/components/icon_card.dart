@@ -1,18 +1,22 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:ncnc_flutter/const/color.dart';
-import 'package:ncnc_flutter/models/category_model.dart';
 
-class CategoryItem extends StatelessWidget {
-  final Category category;
+class IconCard extends StatelessWidget {
+  final String imageUrl;
+  final String title;
+  final VoidCallback onTap;
 
-  const CategoryItem({Key? key, required this.category}) : super(key: key);
+  const IconCard({
+    super.key,
+    required this.imageUrl,
+    required this.title,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // TODO: 카테고리 위젯
-      },
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         decoration: BoxDecoration(
@@ -23,15 +27,15 @@ class CategoryItem extends StatelessWidget {
           children: [
             Expanded(
               child: Image.network(
-                category.imageUrl,
+                imageUrl,
                 width: 50,
                 height: 50,
               ),
             ),
             Text(
-              category.name,
+              title,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ncnc_flutter/components/category_list.dart';
 import 'package:ncnc_flutter/components/custom_app_bar.dart';
+import 'package:ncnc_flutter/components/icon_card_grid.dart';
 import 'package:ncnc_flutter/components/sale_list.dart';
 import 'package:ncnc_flutter/const/color.dart';
 import 'package:ncnc_flutter/models/category_model.dart';
 import 'package:ncnc_flutter/models/sale_model.dart';
+import 'package:ncnc_flutter/screen/brand_screen.dart';
 import 'package:ncnc_flutter/services/api_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Home',
+        title: '니콘내콘',
         isHomeScreen: true,
       ),
       body: RefreshIndicator(
@@ -46,7 +47,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 future: categories,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return CategoryList(categories: snapshot.data!);
+                    final items = snapshot.data!
+                        .map((category) => (
+                              imageUrl: category.imageUrl,
+                              title: category.name,
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => BrandScreen(
+                                      categoryId: category.id,
+                                      categoryName: category.name,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ))
+                        .toList();
+                    return IconCardGrid(items: items);
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   }
