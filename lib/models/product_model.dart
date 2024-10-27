@@ -1,4 +1,4 @@
-class SaleItem {
+class Product {
   final int conCategory2Id;
   final double discountRate;
   final int id;
@@ -13,7 +13,7 @@ class SaleItem {
   final String? tip;
   final String? warning;
 
-  SaleItem({
+  Product({
     required this.conCategory2Id,
     required this.discountRate,
     required this.id,
@@ -29,8 +29,8 @@ class SaleItem {
     required this.warning,
   });
 
-  factory SaleItem.fromJson(Map<String, dynamic> json) {
-    return SaleItem(
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
       conCategory2Id: json['conCategory2Id'],
       discountRate: json['discountRate'].toDouble(),
       id: json['id'],
