@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:ncnc_flutter/models/brand_model.dart';
 import 'package:ncnc_flutter/models/category_model.dart';
-import 'package:ncnc_flutter/models/sale_model.dart';
+import 'package:ncnc_flutter/models/product_model.dart';
 
 class ApiService {
   static final String baseUrl = dotenv.env['API_ADDRESS'] ?? '';
@@ -21,14 +21,14 @@ class ApiService {
     }
   }
 
-  static Future<List<SaleItem>> getSaleItems() async {
+  static Future<List<Product>> getSaleItems() async {
     final response = await http.get(
       Uri.parse('$baseUrl/con-items/soon'),
     );
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final saleItems = (data['conItems'] as List)
-          .map((item) => SaleItem.fromJson(item))
+          .map((item) => Product.fromJson(item))
           .toList();
       return saleItems;
     } else {
@@ -48,6 +48,22 @@ class ApiService {
       return brands;
     } else {
       throw Exception('Failed to load brands');
+    }
+  }
+
+  static Future<List<Product>> getBrandProducts(int brandId) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/con-items/?conCategory2Id=$brandId'),
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final products = (data['conItems'] as List)
+          .map((item) => Product.fromJson(item))
+          .toList();
+      return products;
+    } else {
+      throw Exception('Failed to load brand products');
     }
   }
 }
