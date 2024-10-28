@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:ncnc_flutter/models/brand_model.dart';
 import 'package:ncnc_flutter/models/category_model.dart';
+import 'package:ncnc_flutter/models/item_detail_model.dart';
 import 'package:ncnc_flutter/models/product_model.dart';
 
 class ApiService {
@@ -64,6 +65,19 @@ class ApiService {
       return products;
     } else {
       throw Exception('Failed to load brand products');
+    }
+  }
+
+  static Future<ItemDetail> getItemDetail(int itemId) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/con-items/$itemId'),
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return ItemDetail.fromJson(data['conItem']);
+    } else {
+      throw Exception('Failed to load item detail');
     }
   }
 }

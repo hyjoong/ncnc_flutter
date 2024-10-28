@@ -19,7 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: EdgeInsets.symmetric(horizontal: 8),
           icon: Icon(isHomeScreen ? Icons.dehaze : Icons.chevron_left),
           onPressed: isHomeScreen
-              ? () {} /// Home menu button action
+              ? () {}
               : () {
                   Navigator.of(context).pop();
                 },
@@ -33,6 +33,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
         backgroundColor: secondaryColor,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
+        shadowColor: Colors.transparent,
       ),
     );
   }

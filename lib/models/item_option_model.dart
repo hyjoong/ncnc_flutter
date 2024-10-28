@@ -1,0 +1,22 @@
+class ItemOption {
+  final String count;
+  final DateTime expireAt;
+  final String sellingPrice;
+  final String? isSoonConItemOption;
+
+  ItemOption({
+    required this.count,
+    required this.expireAt,
+    required this.sellingPrice,
+    this.isSoonConItemOption,
+  });
+
+  factory ItemOption.fromJson(Map<String, dynamic> json) {
+    return ItemOption(
+      count: json['count'],
+      expireAt: DateTime.parse(json['expireAt']),
+      sellingPrice: json['sellingPrice'],
+      isSoonConItemOption: json['isSoonConItemOption'],
+    );
+  }
+}
