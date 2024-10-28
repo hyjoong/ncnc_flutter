@@ -39,17 +39,6 @@ class _BrandProductScreenState extends State<BrandProductScreen> {
           future: products,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              final items = snapshot.data!
-                  .map(
-                    (product) => (
-                      imageUrl: product.imageUrl,
-                      title: product.name,
-                      onTap: () {
-                        // TODO: 상품 상세 페이지로 이동
-                      },
-                    ),
-                  )
-                  .toList();
               return ProductList(products: snapshot.data!);
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));

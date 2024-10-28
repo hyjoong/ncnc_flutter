@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ncnc_flutter/components/product_card.dart';
 import 'package:ncnc_flutter/models/product_model.dart';
+import 'package:ncnc_flutter/screen/product_detail_screen.dart';
 
 class ProductList extends StatelessWidget {
   final List<Product> products;
@@ -25,7 +26,13 @@ class ProductList extends StatelessWidget {
           ncSellingPrice: product.ncSellingPrice,
           originalPrice: product.originalPrice,
           onTap: () {
-            // TODO: product detail widget 이동
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ProductDetailScreen(
+                  productId: product.id,
+                ),
+              ),
+            );
           },
         );
       },
