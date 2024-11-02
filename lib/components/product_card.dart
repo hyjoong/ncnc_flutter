@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ncnc_flutter/const/color.dart';
 
 class ProductCard extends StatelessWidget {
@@ -21,6 +22,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final numberFormat = NumberFormat('#,###');
+
     return Card(
       color: secondaryColor,
       child: InkWell(
@@ -35,6 +38,30 @@ class ProductCard extends StatelessWidget {
                 child: Image.network(
                   imageUrl,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: 70,
+                      height: 70,
+                      color: Colors.grey[200],
+                      child: const Icon(
+                        Icons.image_not_supported_outlined,
+                        color: Colors.grey,
+                      ),
+                    );
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    return Container(
+                      width: 70,
+                      height: 70,
+                      color: Colors.grey[200],
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  },
                 ),
               ),
               Expanded(
@@ -59,7 +86,7 @@ class ProductCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            '$discountRate%',
+                            '${discountRate.toInt()}%',
                             style: const TextStyle(
                               fontSize: 18.0,
                               color: lightRed,
@@ -68,7 +95,7 @@ class ProductCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            '${ncSellingPrice.toString()}원',
+                            '${numberFormat.format(ncSellingPrice)}원',
                             style: const TextStyle(
                               fontSize: 18.0,
                               color: accentColor,
@@ -77,7 +104,7 @@ class ProductCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            '${originalPrice.toString()}원',
+                            '${numberFormat.format(originalPrice)}원',
                             style: TextStyle(
                               color: darkGrey,
                               fontSize: 14,
