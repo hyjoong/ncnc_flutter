@@ -1,0 +1,38 @@
+name: Flutter Tests
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      API_ADDRESS: ${{ secrets.API_ADDRESS }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.22.3"
+          channel: "stable"
+
+      - name: Create .env file
+        run: |
+          echo "API_ADDRESS=${{ secrets.API_ADDRESS }}" > .env
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Run tests with coverage
+        run: flutter test --coverage
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: coverage/lcov.info
+        if: always()

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:ncnc_flutter/const/color.dart';
 
 class IconCard extends StatelessWidget {
@@ -30,6 +31,17 @@ class IconCard extends StatelessWidget {
                 imageUrl,
                 width: 50,
                 height: 50,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: 50,
+                    height: 50,
+                    color: grey,
+                    child: const Icon(
+                      Icons.image_not_supported_outlined,
+                      color: grey,
+                    ),
+                  );
+                },
               ),
             ),
             Text(
