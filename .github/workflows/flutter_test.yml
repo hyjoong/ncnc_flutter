@@ -7,6 +7,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      API_ADDRESS: ${{ secrets.API_ADDRESS }}
     steps:
       - uses: actions/checkout@v3
 
@@ -15,6 +17,10 @@ jobs:
         with:
           flutter-version: "3.22.3"
           channel: "stable"
+
+      - name: Create .env file
+        run: |
+          echo "API_ADDRESS=${{ secrets.API_ADDRESS }}" > .env
 
       - name: Install dependencies
         run: flutter pub get
