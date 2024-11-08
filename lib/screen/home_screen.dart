@@ -6,39 +6,47 @@ import 'package:ncnc_flutter/const/color.dart';
 import 'package:ncnc_flutter/models/category_model.dart';
 import 'package:ncnc_flutter/models/product_model.dart';
 import 'package:ncnc_flutter/screen/brand_screen.dart';
-import 'package:ncnc_flutter/services/api_service.dart';
+import 'package:ncnc_flutter/repositories/home_repository.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _repository = HomeRepository();
   late Future<List<Category>> categories;
   late Future<List<Product>> saleItems;
 
   @override
   void initState() {
     super.initState();
-    categories = ApiService.getCategories();
-    saleItems = ApiService.getSaleItems();
+    _initializeData();
+  }
+
+  void _initializeData() {
+    categories = _repository.getCategories();
+    saleItems = _repository.getSaleItems();
+  }
+
+  Future<void> _refreshData() async {
+    setState(() {
+      _initializeData();
+    });
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: '니콘내콘',
         isHomeScreen: true,
       ),
       body: RefreshIndicator(
-        onRefresh: () async {
-          setState(() {
-            categories = ApiService.getCategories();
-            saleItems = ApiService.getSaleItems();
-          });
-        },
+        onRefresh: _refreshData,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,9 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 14),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Container(
-                  child: Text(
+                  child: const Text(
                     '놓치지 마세요',
                     style: TextStyle(
                       fontSize: 14,

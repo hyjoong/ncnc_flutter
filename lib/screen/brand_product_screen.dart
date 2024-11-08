@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ncnc_flutter/components/custom_app_bar.dart';
 import 'package:ncnc_flutter/components/product_list.dart';
 import 'package:ncnc_flutter/models/product_model.dart';
-import 'package:ncnc_flutter/services/api_service.dart';
+import 'package:ncnc_flutter/repositories/brand_product_repository.dart';
 
 class BrandProductScreen extends StatefulWidget {
   final int brandId;
@@ -19,12 +19,13 @@ class BrandProductScreen extends StatefulWidget {
 }
 
 class _BrandProductScreenState extends State<BrandProductScreen> {
+  final _repository = BrandProductRepository();
   late Future<List<Product>> products;
 
   @override
   void initState() {
     super.initState();
-    products = ApiService.getBrandProducts(widget.brandId);
+    products = _repository.getBrandProducts(widget.brandId);
   }
 
   @override

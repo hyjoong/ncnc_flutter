@@ -3,7 +3,7 @@ import 'package:ncnc_flutter/components/custom_app_bar.dart';
 import 'package:ncnc_flutter/components/icon_card_grid.dart';
 import 'package:ncnc_flutter/models/brand_model.dart';
 import 'package:ncnc_flutter/screen/brand_product_screen.dart';
-import 'package:ncnc_flutter/services/api_service.dart';
+import 'package:ncnc_flutter/repositories/brand_repository.dart';
 
 class BrandScreen extends StatefulWidget {
   final int categoryId;
@@ -20,12 +20,13 @@ class BrandScreen extends StatefulWidget {
 }
 
 class _BrandScreenState extends State<BrandScreen> {
+  final _repository = BrandRepository();
   late Future<List<Brand>> brands;
 
   @override
   void initState() {
     super.initState();
-    brands = ApiService.getBrands(widget.categoryId);
+    brands = _repository.getBrands(widget.categoryId);
   }
 
   @override

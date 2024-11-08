@@ -7,9 +7,13 @@ import 'package:ncnc_flutter/models/item_detail_model.dart';
 import 'package:ncnc_flutter/models/product_model.dart';
 
 class ApiService {
-  static final String baseUrl = dotenv.env['API_ADDRESS'] ?? '';
+  static final ApiService _instance = ApiService._internal();
+  factory ApiService() => _instance;
 
-  static Future<List<Category>> getCategories() async {
+  final String baseUrl;
+  ApiService._internal() : baseUrl = dotenv.env['API_ADDRESS'] ?? '';
+
+  Future<List<Category>> getCategories() async {
     final response = await http.get(Uri.parse('$baseUrl/con-category1s'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -22,7 +26,7 @@ class ApiService {
     }
   }
 
-  static Future<List<Product>> getSaleItems() async {
+  Future<List<Product>> getSaleItems() async {
     final response = await http.get(
       Uri.parse('$baseUrl/con-items/soon'),
     );
@@ -37,7 +41,7 @@ class ApiService {
     }
   }
 
-  static Future<List<Brand>> getBrands(int categoryId) async {
+  Future<List<Brand>> getBrands(int categoryId) async {
     final response = await http.get(
       Uri.parse('$baseUrl/con-category1s/$categoryId/nested'),
     );
@@ -52,7 +56,7 @@ class ApiService {
     }
   }
 
-  static Future<List<Product>> getBrandProducts(int brandId) async {
+  Future<List<Product>> getBrandProducts(int brandId) async {
     final response = await http.get(
       Uri.parse('$baseUrl/con-items/?conCategory2Id=$brandId'),
     );
@@ -68,7 +72,7 @@ class ApiService {
     }
   }
 
-  static Future<ItemDetail> getItemDetail(int itemId) async {
+  Future<ItemDetail> getItemDetail(int itemId) async {
     final response = await http.get(
       Uri.parse('$baseUrl/con-items/$itemId'),
     );
