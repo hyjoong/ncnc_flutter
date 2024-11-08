@@ -4,7 +4,7 @@ import 'package:ncnc_flutter/components/option_bottom_sheet.dart';
 import 'package:ncnc_flutter/components/product_card.dart';
 import 'package:ncnc_flutter/const/color.dart';
 import 'package:ncnc_flutter/models/item_detail_model.dart';
-import 'package:ncnc_flutter/services/api_service.dart';
+import 'package:ncnc_flutter/repositories/product_detail_repository.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final int productId;
@@ -19,6 +19,7 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  final _repository = ProductDetailRepository();
   late Future<ItemDetail> itemDetail;
 
   @override
@@ -28,9 +29,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   void _initializeItemDetail() {
-    setState(() {
-      itemDetail = ApiService.getItemDetail(widget.productId);
-    });
+    itemDetail = _repository.getItemDetail(widget.productId);
   }
 
   @override
