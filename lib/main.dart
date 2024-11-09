@@ -4,6 +4,8 @@ import 'package:ncnc_flutter/const/color.dart';
 import 'package:ncnc_flutter/screen/home_screen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
@@ -14,8 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home:  const HomeScreen(),
-        theme: ThemeData(scaffoldBackgroundColor: grey)
-    );
+        home: const HomeScreen(),
+        theme: ThemeData(scaffoldBackgroundColor: grey));
   }
 }
