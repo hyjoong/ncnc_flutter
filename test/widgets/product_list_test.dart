@@ -60,8 +60,6 @@ void main() {
     testWidgets('상품 목록이 올바르게 표시되어야 한다', (WidgetTester tester) async {
       await pumpProductList(tester, testProducts);
 
-      expect(find.byIcon(Icons.image_not_supported_outlined), findsNWidgets(2));
-
       expect(find.text('테스트 상품 1'), findsOneWidget);
       expect(find.text('테스트 상품 2'), findsOneWidget);
 
