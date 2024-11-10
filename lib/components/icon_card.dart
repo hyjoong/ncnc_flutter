@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ncnc_flutter/const/color.dart';
 
@@ -27,21 +27,23 @@ class IconCard extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: Image.network(
-                imageUrl,
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
                 width: 50,
                 height: 50,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    width: 50,
-                    height: 50,
+                fadeInDuration: Duration.zero,
+                placeholderFadeInDuration: Duration.zero,
+                useOldImageOnUrlChange: true,
+                cacheKey: imageUrl,
+                errorWidget: (context, url, error) => Container(
+                  width: 50,
+                  height: 50,
+                  color: grey,
+                  child: const Icon(
+                    Icons.image_not_supported_outlined,
                     color: grey,
-                    child: const Icon(
-                      Icons.image_not_supported_outlined,
-                      color: grey,
-                    ),
-                  );
-                },
+                  ),
+                ),
               ),
             ),
             Text(

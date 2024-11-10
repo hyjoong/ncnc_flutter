@@ -1,87 +1,80 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:ncnc_flutter/models/brand_model.dart';
 import 'package:ncnc_flutter/models/category_model.dart';
 import 'package:ncnc_flutter/models/item_detail_model.dart';
 import 'package:ncnc_flutter/models/product_model.dart';
+import 'package:ncnc_flutter/services/dio_client.dart';
 
 class ApiService {
   static final ApiService _instance = ApiService._internal();
   factory ApiService() => _instance;
 
-  final String baseUrl;
-  ApiService._internal() : baseUrl = dotenv.env['API_ADDRESS'] ?? '';
+  final DioClient _client = DioClient();
+
+  ApiService._internal();
 
   Future<List<Category>> getCategories() async {
-    final response = await http.get(Uri.parse('$baseUrl/con-category1s'));
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final categories = (data['conCategory1s'] as List)
+    try {
+      final response = await _client.get(
+        '/con-category1s',
+        maxStale: const Duration(days: 30),
+      );
+      final categories = (response.data['conCategory1s'] as List)
           .map((item) => Category.fromJson(item))
           .toList();
       return categories;
-    } else {
-      throw Exception('Failed to load categories');
+    } catch (e) {
+      throw Exception('카테고리 목록을 불러오는데 실패했습니다');
     }
   }
 
   Future<List<Product>> getSaleItems() async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/con-items/soon'),
-    );
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final saleItems = (data['conItems'] as List)
+    try {
+      final response = await _client.get('/con-items/soon');
+      final saleItems = (response.data['conItems'] as List)
           .map((item) => Product.fromJson(item))
           .toList();
       return saleItems;
-    } else {
-      throw Exception('Failed to load sale items');
+    } catch (e) {
+      throw Exception('할인 상품 목록을 불러오는데 실패했습니다');
     }
   }
 
   Future<List<Brand>> getBrands(int categoryId) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/con-category1s/$categoryId/nested'),
-    );
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final brands = (data['conCategory1']['conCategory2s'] as List)
+    try {
+      final response = await _client.get(
+        '/con-category1s/$categoryId/nested',
+        maxStale: const Duration(days: 30),
+      );
+      final brands = (response.data['conCategory1']['conCategory2s'] as List)
           .map((item) => Brand.fromJson(item))
           .toList();
       return brands;
-    } else {
-      throw Exception('Failed to load brands');
+    } catch (e) {
+      throw Exception('브랜드 목록을 불러오는데 실패했습니다');
     }
   }
 
   Future<List<Product>> getBrandProducts(int brandId) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/con-items/?conCategory2Id=$brandId'),
-    );
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final products = (data['conItems'] as List)
+    try {
+      final response = await _client.get(
+        '/con-items/?conCategory2Id=$brandId',
+        maxStale: const Duration(hours: 24),
+      );
+      final products = (response.data['conItems'] as List)
           .map((item) => Product.fromJson(item))
           .toList();
       return products;
-    } else {
-      throw Exception('Failed to load brand products');
+    } catch (e) {
+      throw Exception('브랜드 상품 목록을 불러오는데 실패했습니다');
     }
   }
 
   Future<ItemDetail> getItemDetail(int itemId) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl/con-items/$itemId'),
-    );
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return ItemDetail.fromJson(data['conItem']);
-    } else {
-      throw Exception('Failed to load item detail');
+    try {
+      final response = await _client.get('/con-items/$itemId');
+      return ItemDetail.fromJson(response.data['conItem']);
+    } catch (e) {
+      throw Exception('상품 상세 정보를 불러오는데 실패했습니다');
     }
   }
 }
