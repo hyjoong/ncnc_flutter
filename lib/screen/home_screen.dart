@@ -60,11 +60,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               imageUrl: category.imageUrl,
                               title: category.name,
                               onTap: () {
+                                final brands = BrandScreen.prefetchData(category.id);
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => BrandScreen(
                                       categoryId: category.id,
                                       categoryName: category.name,
+                                      prefetchedBrands: brands,
                                     ),
                                   ),
                                 );

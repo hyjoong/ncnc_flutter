@@ -9,12 +9,19 @@ import 'package:ncnc_flutter/repositories/brand_repository.dart';
 class BrandScreen extends StatefulWidget {
   final int categoryId;
   final String categoryName;
+  final Future<List<Brand>>? prefetchedBrands;
+
 
   const BrandScreen({
     super.key,
     required this.categoryId,
     required this.categoryName,
+    this.prefetchedBrands,
   });
+
+  static Future<List<Brand>> prefetchData(int categoryId) {
+    return BrandRepository().getBrands(categoryId);
+  }
 
   @override
   State<BrandScreen> createState() => _BrandScreenState();
@@ -28,7 +35,7 @@ class _BrandScreenState extends State<BrandScreen> {
   @override
   void initState() {
     super.initState();
-    brands = _repository.getBrands(widget.categoryId);
+    brands = widget.prefetchedBrands ?? _repository.getBrands(widget.categoryId);
   }
 
   @override
