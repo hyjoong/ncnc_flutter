@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ncnc_flutter/components/custom_app_bar.dart';
 import 'package:ncnc_flutter/components/icon_card_grid.dart';
+import 'package:ncnc_flutter/components/loading/icon_grid_skeleton.dart';
+import 'package:ncnc_flutter/components/loading/product_card_skeleton.dart';
 import 'package:ncnc_flutter/components/product_list.dart';
 import 'package:ncnc_flutter/const/color.dart';
 import 'package:ncnc_flutter/models/category_model.dart';
@@ -75,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   }
-                  return const Center(child: CircularProgressIndicator());
+                  return const IconGridSkeleton(itemCount: 9);
                 },
               ),
               const SizedBox(height: 14),
@@ -113,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   }
-                  return const Center(child: CircularProgressIndicator());
+                  return const ProductCardSkeleton(itemCount: 5);
                 },
               ),
             ],

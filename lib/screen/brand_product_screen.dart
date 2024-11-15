@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ncnc_flutter/components/custom_app_bar.dart';
+import 'package:ncnc_flutter/components/loading/product_card_skeleton.dart';
 import 'package:ncnc_flutter/components/product_list.dart';
 import 'package:ncnc_flutter/models/product_model.dart';
 import 'package:ncnc_flutter/repositories/brand_product_repository.dart';
@@ -44,7 +45,7 @@ class _BrandProductScreenState extends State<BrandProductScreen> {
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             }
-            return const Center(child: CircularProgressIndicator());
+            return const ProductCardSkeleton(itemCount: 8);
           },
         ),
       ),

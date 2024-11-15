@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ncnc_flutter/components/custom_app_bar.dart';
 import 'package:ncnc_flutter/components/icon_card_grid.dart';
+import 'package:ncnc_flutter/components/loading/icon_grid_skeleton.dart';
 import 'package:ncnc_flutter/models/brand_model.dart';
 import 'package:ncnc_flutter/screen/brand_product_screen.dart';
 import 'package:ncnc_flutter/repositories/brand_repository.dart';
@@ -63,7 +64,7 @@ class _BrandScreenState extends State<BrandScreen> {
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             }
-            return const Center(child: CircularProgressIndicator());
+            return const IconGridSkeleton(itemCount: 18);
           },
         ),
       ),
