@@ -13,9 +13,9 @@ class ItemOption {
 
   factory ItemOption.fromJson(Map<String, dynamic> json) {
     return ItemOption(
-      count: json['count'],
+      count: json['count'].toString(),
       expireAt: DateTime.parse(json['expireAt']),
-      sellingPrice: json['sellingPrice'],
+      sellingPrice: json['sellingPrice'].toString(),
       isSoonConItemOption: json['isSoonConItemOption'],
     );
   }
