@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ncnc_flutter/components/custom_app_bar.dart';
+import 'package:ncnc_flutter/components/loading/product_detail_skeleton.dart';
 import 'package:ncnc_flutter/components/option_bottom_sheet.dart';
 import 'package:ncnc_flutter/components/product_card.dart';
 import 'package:ncnc_flutter/const/color.dart';
@@ -25,10 +26,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   void initState() {
     super.initState();
-    _initializeItemDetail();
-  }
-
-  void _initializeItemDetail() {
     itemDetail = _repository.getItemDetail(widget.productId);
   }
 
@@ -43,7 +40,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         future: itemDetail,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const ProductDetailSkeleton();
           }
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -115,7 +112,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
-                      shape: RoundedRectangleBorder(
+                      shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero,
                       ),
                     ),
