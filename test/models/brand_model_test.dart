@@ -18,5 +18,15 @@ void main() {
       expect(brand.conCategory1Id, 1);
       expect(brand.imageUrl, 'test.jpg');
     });
+
+    test('copyWith로 새로운 인스턴스를 생성할 수 있다', () {
+      const brand = Brand(
+          id: 1, name: '테스트 브랜드', conCategory1Id: 1, imageUrl: 'test.jpg');
+      final updatedBrand = brand.copyWith(name: '새로운 브랜드');
+      expect(updatedBrand.name, '새로운 브랜드');
+      expect(updatedBrand.id, brand.id);
+      expect(updatedBrand.conCategory1Id, brand.conCategory1Id);
+      expect(updatedBrand.imageUrl, brand.imageUrl);
+    });
   });
 }
