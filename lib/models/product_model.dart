@@ -1,49 +1,30 @@
-class Product {
-  final int conCategory2Id;
-  final double discountRate;
-  final int id;
-  final String imageUrl;
-  final String? info;
-  final String? information;
-  final int isOnlyAccount;
-  final int minSellingPrice;
-  final String name;
-  final int ncSellingPrice;
-  final int originalPrice;
-  final String? tip;
-  final String? warning;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  Product({
-    required this.conCategory2Id,
-    required this.discountRate,
-    required this.id,
-    required this.imageUrl,
-    this.info,
-    this.information,
-    required this.isOnlyAccount,
-    required this.minSellingPrice,
-    required this.name,
-    required this.ncSellingPrice,
-    required this.originalPrice,
-    required this.tip,
-    required this.warning,
-  });
+part 'product_model.freezed.dart';
+part 'product_model.g.dart';
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
-      conCategory2Id: json['conCategory2Id'],
-      discountRate: json['discountRate'].toDouble(),
-      id: json['id'],
-      imageUrl: json['imageUrl'],
-      info: json['info'],
-      information: json['information'],
-      isOnlyAccount: json['isOnlyAccount'],
-      minSellingPrice: json['minSellingPrice'],
-      name: json['name'],
-      ncSellingPrice: json['ncSellingPrice'],
-      originalPrice: json['originalPrice'],
-      tip: json['tip'],
-      warning: json['warning'],
-    );
-  }
+@freezed
+class Product with _$Product {
+  const factory Product({
+    required int conCategory2Id,
+    required double discountRate,
+    required int id,
+    required String imageUrl,
+    String? info,
+    String? information,
+    required int isOnlyAccount,
+    required int minSellingPrice,
+    required String name,
+    required int ncSellingPrice,
+    required int originalPrice,
+    String? tip,
+    String? warning,
+  }) = _Product;
+
+  factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson({
+        ...json,
+        'discountRate': json['discountRate'] is int
+            ? (json['discountRate'] as int).toDouble()
+            : json['discountRate'],
+      });
 }
