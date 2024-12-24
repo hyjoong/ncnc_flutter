@@ -48,5 +48,28 @@ void main() {
 
       expect(() => Product.fromJson(json), isNot(throwsException));
     });
+
+    test('copyWith로 새로운 인스턴스를 생성할 수 있다', () {
+      const product = Product(
+        id: 1,
+        conCategory2Id: 1,
+        name: '테스트 상품',
+        imageUrl: 'test.jpg',
+        discountRate: 15.0,
+        ncSellingPrice: 8500,
+        originalPrice: 10000,
+        minSellingPrice: 8500,
+        isOnlyAccount: 0,
+      );
+
+      final updatedProduct = product.copyWith(
+        name: '수정된 상품',
+        discountRate: 20.0,
+      );
+
+      expect(updatedProduct.name, '수정된 상품');
+      expect(updatedProduct.discountRate, 20.0);
+      expect(updatedProduct.id, product.id);
+    });
   });
 }

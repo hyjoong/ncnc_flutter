@@ -1,22 +1,22 @@
-class ItemOption {
-  final String count;
-  final DateTime expireAt;
-  final String sellingPrice;
-  final String? isSoonConItemOption;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  ItemOption({
-    required this.count,
-    required this.expireAt,
-    required this.sellingPrice,
-    this.isSoonConItemOption,
-  });
+part 'item_option_model.freezed.dart';
+part 'item_option_model.g.dart';
 
-  factory ItemOption.fromJson(Map<String, dynamic> json) {
-    return ItemOption(
-      count: json['count'].toString(),
-      expireAt: DateTime.parse(json['expireAt']),
-      sellingPrice: json['sellingPrice'].toString(),
-      isSoonConItemOption: json['isSoonConItemOption'],
-    );
-  }
+@freezed
+class ItemOption with _$ItemOption {
+  const factory ItemOption({
+    required String count,
+    required DateTime expireAt,
+    required String sellingPrice,
+    String? isSoonConItemOption,
+  }) = _ItemOption;
+
+  factory ItemOption.fromJson(Map<String, dynamic> json) =>
+      _$ItemOptionFromJson({
+        ...json,
+        'count': json['count'].toString(),
+        'expireAt': json['expireAt'],
+        'sellingPrice': json['sellingPrice'].toString(),
+      });
 }

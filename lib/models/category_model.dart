@@ -1,22 +1,17 @@
-class Category {
-  final int id;
-  final String name;
-  final double discountRate;
-  final String imageUrl;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  Category({
-    required this.id,
-    required this.name,
-    required this.discountRate,
-    required this.imageUrl,
-  });
+part 'category_model.freezed.dart';
+part 'category_model.g.dart';
 
-  factory Category.fromJson(Map<String, dynamic> json) {
-    return Category(
-      id: json['id'],
-      name: json['name'],
-      discountRate: json['discountRate'].toDouble(),
-      imageUrl: json['imageUrl'],
-    );
-  }
+@freezed
+class Category with _$Category {
+  const factory Category({
+    required int id,
+    required String name,
+    required double discountRate,
+    required String imageUrl,
+  }) = _Category;
+
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      _$CategoryFromJson(json);
 }

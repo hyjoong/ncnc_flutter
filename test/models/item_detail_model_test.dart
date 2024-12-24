@@ -16,11 +16,7 @@ void main() {
         'conCategory2': {
           'id': 1,
           'name': '테스트 카테고리',
-          'conCategory1': {
-            'id': 1,
-            'name': '상위 카테고리',
-            'info': '카테고리 정보'
-          }
+          'conCategory1': {'id': 1, 'name': '상위 카테고리', 'info': '카테고리 정보'}
         }
       };
 
@@ -45,15 +41,41 @@ void main() {
           'id': 1,
           'name': '테스트 카테고리',
           'info': null,
-          'conCategory1': {
-            'id': 1,
-            'name': '상위 카테고리',
-            'info': null
-          }
+          'conCategory1': {'id': 1, 'name': '상위 카테고리', 'info': null}
         }
       };
 
       expect(() => ItemDetail.fromJson(json), isNot(throwsException));
+    });
+
+    test('copyWith로 새로운 인스턴스를 생성할 수 있다', () {
+      const itemDetail = ItemDetail(
+        id: 1,
+        name: '테스트 상품',
+        originalPrice: 10000,
+        minSellingPrice: 8000,
+        ncSellingPrice: 8500,
+        discountRate: 15,
+        options: [],
+        imageUrl: 'test.jpg',
+        conCategory2: ConCategory2(
+          id: 1,
+          name: '테스트 카테고리',
+          conCategory1: ConCategory1(
+            id: 1,
+            name: '상위 카테고리',
+          ),
+        ),
+      );
+
+      final updatedItemDetail = itemDetail.copyWith(
+        name: '수정된 상품',
+        originalPrice: 12000,
+      );
+
+      expect(updatedItemDetail.name, '수정된 상품');
+      expect(updatedItemDetail.originalPrice, 12000);
+      expect(updatedItemDetail.id, itemDetail.id);
     });
   });
 }
