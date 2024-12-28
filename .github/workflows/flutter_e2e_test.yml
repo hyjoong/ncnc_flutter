@@ -28,7 +28,7 @@ jobs:
 
       - name: Start iOS Simulator
         run: |
-          UDID=$(xcrun simctl list devices | grep -w "iPhone 14 Pro" | grep -E -o -i "([0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12})")
+          UDID=$(xcrun simctl list devices available | grep "iPhone 1[1-5]" | head -1 | awk -F'[()]' '{print $2}')
           xcrun simctl boot $UDID
 
       - name: Run E2E Tests
