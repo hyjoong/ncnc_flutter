@@ -1,0 +1,42 @@
+name: Flutter E2E Tests
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  e2e-test:
+    runs-on: macos-latest
+    env:
+      API_ADDRESS: ${{ secrets.API_ADDRESS }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.5"
+          channel: "stable"
+
+      - name: Create .env file
+        run: |
+          echo "API_ADDRESS=${{ secrets.API_ADDRESS }}" > .env
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Start iOS Simulator
+        run: |
+          UDID=$(xcrun simctl list devices | grep -w "iPhone 14 Pro" | grep -E -o -i "([0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12})")
+          xcrun simctl boot $UDID
+
+      - name: Run E2E Tests
+        run: flutter test integration_test --verbose
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: test-results
