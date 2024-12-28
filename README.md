@@ -25,6 +25,7 @@
 ### 2. 테스트 자동화
 
 - Widget, Model 단위 테스트 구현 ([#11](https://github.com/hyjoong/ncnc_flutter/pull/11))
+- E2E 테스트를 통한 앱 Flow검증 ([#19](https://github.com/hyjoong/ncnc_flutter/pull/19))
 - GitHub Actions를 통한 CI/CD 구축
 
 ### 3. UI/UX 개선
